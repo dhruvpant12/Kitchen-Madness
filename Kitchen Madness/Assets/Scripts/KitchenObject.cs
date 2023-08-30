@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class KitchenObject : MonoBehaviour
 {
-    [SerializeField] private KitchenObjectSO kitchenObjectSO;
-    private ClearCounter clearCounter;
+    [SerializeField] private KitchenObjectSO kitchenObjectSO; // This object's Scriptable object.
+
+    private ClearCounter clearCounter; // What counter this KO is sitting on.
 
 
     //Setting new counter
     public void SetClearCounter(ClearCounter clearCounter)
     {
+        // Clearing old kitchen counter
         // if counter is not emplty , clear the item on it.
-        if(this.clearCounter == null)
+        if(this.clearCounter != null)
         {
-            clearCounter.ClearKitchenObject();
+            this.clearCounter.ClearKitchenObject();
         }
 
         // assign new counter
@@ -26,7 +28,7 @@ public class KitchenObject : MonoBehaviour
         }
         clearCounter.SetKitchenObject(this); // the kitchen object never be assign to a counter that is holding something.
 
-        // change position and graphics of object.
+        // change parent, position and graphics of object and update the graphics.
         transform.parent = clearCounter.GetKichtenObjectFollowTransform();
         transform.localPosition = Vector3.zero;
     }

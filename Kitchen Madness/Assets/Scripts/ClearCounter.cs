@@ -12,7 +12,7 @@ public class ClearCounter : MonoBehaviour
 
 
 
-    private KitchenObject kitchenObject;
+    private KitchenObject kitchenObject; // What KO is on the counter.
 
     private void Update()
     {
@@ -22,12 +22,13 @@ public class ClearCounter : MonoBehaviour
             {
                 kitchenObject.SetClearCounter(secondClearCounter);
             }
+            Debug.Log("transfer");
         }
     }
 
     public void Interact()
     {
-
+        //only spawn new object is counter top is empty.
         if (kitchenObject == null)
         {
             Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab, counterTopPoint);
