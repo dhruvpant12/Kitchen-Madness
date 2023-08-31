@@ -6,36 +6,36 @@ public class KitchenObject : MonoBehaviour
 {
     [SerializeField] private KitchenObjectSO kitchenObjectSO; // This object's Scriptable object.
 
-    private ClearCounter clearCounter; // What counter this KO is sitting on.
+    private IKitchenObjectParent kitchenObjectParent; // What counter this KO is sitting on.
 
 
     //Setting new counter
-    public void SetClearCounter(ClearCounter clearCounter)
+    public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent )
     {
         // Clearing old kitchen counter
         // if counter is not emplty , clear the item on it.
-        if(this.clearCounter != null)
+        if(this.kitchenObjectParent != null)
         {
-            this.clearCounter.ClearKitchenObject();
+            this.kitchenObjectParent.ClearKitchenObject();
         }
 
-        // assign new counter
-        this.clearCounter = clearCounter;
+        // assign new parent
+        this.kitchenObjectParent = kitchenObjectParent;
 
-        if(clearCounter.HasKitchenObject())
+        if(kitchenObjectParent.HasKitchenObject())
         {
-            Debug.LogError("counter has soemthing on it already");
+            Debug.LogError("kitchenobjectparent has soemthing on it already");
         }
-        clearCounter.SetKitchenObject(this); // the kitchen object never be assign to a counter that is holding something.
+        kitchenObjectParent.SetKitchenObject(this); // assigning kitchen object to its new parent
 
         // change parent, position and graphics of object and update the graphics.
-        transform.parent = clearCounter.GetKichtenObjectFollowTransform();
+        transform.parent = kitchenObjectParent.GetKichtenObjectFollowTransform();
         transform.localPosition = Vector3.zero;
     }
 
-    public ClearCounter GetClearCounter()
+    public IKitchenObjectParent GetKitchenObjectParent()
     {
-        return clearCounter;
+        return kitchenObjectParent;
     }
     public KitchenObjectSO GetKitchenObjectSO()
     {

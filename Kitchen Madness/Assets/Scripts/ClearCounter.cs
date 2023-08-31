@@ -2,31 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearCounter : MonoBehaviour
+public class ClearCounter : MonoBehaviour ,IKitchenObjectParent 
 {
 
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
-    [SerializeField] private Transform counterTopPoint;
-    [SerializeField] private ClearCounter secondClearCounter;
-    [SerializeField] private bool testing;
+    [SerializeField] private Transform counterTopPoint;    
 
 
 
     private KitchenObject kitchenObject; // What KO is on the counter.
 
-    private void Update()
-    {
-        if(testing && Input.GetKeyDown(KeyCode.T))
-        {
-            if(kitchenObject!=null)
-            {
-                kitchenObject.SetClearCounter(secondClearCounter);
-            }
-            Debug.Log("transfer");
-        }
-    }
+     
 
-    public void Interact()
+    public void Interact(Player player)
     {
         //only spawn new object is counter top is empty.
         if (kitchenObject == null)
@@ -37,13 +25,17 @@ public class ClearCounter : MonoBehaviour
             // Kitchen object will be assigned a new counter . 
             // the new counter will be assigned this kitchen object
             // its position will be updated using its parent's transform
-            kitchenObjectTransform.GetComponent<KitchenObject>().SetClearCounter(this);
+            kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(this);
            
         }
+
+        //if counter is not empty , then give the object to the player
         else
         {
+            kitchenObject.SetKitchenObjectParent(player);
+
             // Which counter the object is on.
-            Debug.Log(kitchenObject.GetClearCounter());
+           // Debug.Log(kitchenObject.GetClearCounter());
         }
 
        

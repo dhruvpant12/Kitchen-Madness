@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour , IKitchenObjectParent
 {
     
 
@@ -19,11 +19,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
+    [SerializeField] private Transform kitchenObjectHoldPoint;
 
-    private ClearCounter selectedCounter;
+
+    private ClearCounter selectedCounter; 
 
     private bool isWalking;
     private Vector3 lastInteractionDir;
+    private KitchenObject kitchenObject; // What KO is on.
 
     private void Awake()
     {
@@ -43,7 +46,7 @@ public class Player : MonoBehaviour
 
         if(selectedCounter != null)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
         
     }
@@ -168,4 +171,34 @@ public class Player : MonoBehaviour
             selectedCounter = selectedCounter
         });
     }
+
+    #region KitchenParentInterface
+    public Transform GetKichtenObjectFollowTransform()
+    {
+        return kitchenObjectHoldPoint;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
+
+    public void ClearKitchenObject()
+    {
+        kitchenObject = null;
+    }
+
+
+    // return if an object is on ut.
+    public bool HasKitchenObject()
+    {
+        return kitchenObject != null;
+    }
+
+    #endregion
 }
