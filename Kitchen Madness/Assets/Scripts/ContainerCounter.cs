@@ -14,10 +14,15 @@ public class ContainerCounter : BaseCounter
     public override void Interact(Player player)
     {
         //player interacts and the container spawns an object and gives it to the player 
-            Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab );         
-            kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(player);
 
-        OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);
+        //player is not carrying anything. So give an item to player.
+        if (!player.HasKitchenObject())
+        {
+            KitchenObject.SpawnKitchenObject(kitchenObjectSO, player);
+           
+
+            OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty); // lid animation.
+        }
     }
 
   

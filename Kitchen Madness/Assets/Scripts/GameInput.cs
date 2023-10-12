@@ -6,6 +6,8 @@ using System;
 public class GameInput : MonoBehaviour
 {
     public event EventHandler OnInteractAction;
+    public event EventHandler OnInteractAlternateAction;
+
     private PlayerInputAction playerInputActions;
     private void Awake()
     {
@@ -13,12 +15,18 @@ public class GameInput : MonoBehaviour
 
         playerInputActions.Player.Enable(); // Enabling Action Map . 
 
-        playerInputActions.Player.Interact.performed += Interact_performed;
+        playerInputActions.Player.Interact.performed += Interact_performed; // Key E fires off its event . Interact performed is subed so it fires off.
+        playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
     }
 
-    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void InteractAlternate_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnInteractAction ?.Invoke(this, EventArgs.Empty); // Checking for subscribers.
+        OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) // This is return fires off another event .
+    {
+        OnInteractAction ?.Invoke(this, EventArgs.Empty); // Checking for subscribers. Player class subs to it.
     }
 
     public Vector2 GetMovementVectorNormalized()

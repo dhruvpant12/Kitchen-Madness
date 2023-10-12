@@ -8,6 +8,7 @@ public class Player : MonoBehaviour , IKitchenObjectParent
     
 
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+
     public class OnSelectedCounterChangedEventArgs : EventArgs
     {
         public BaseCounter selectedCounter;
@@ -39,6 +40,15 @@ public class Player : MonoBehaviour , IKitchenObjectParent
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+    }
+
+    private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
+    {
+        if (selectedCounter != null)
+        {
+            selectedCounter.InteractAlternate(this);  // InteractALternate defined in base counter class.
+        }
     }
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
@@ -83,7 +93,7 @@ public class Player : MonoBehaviour , IKitchenObjectParent
         { 
             //Check mvoement along x axis.
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized; // Normalised to not change speed.
-            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
+            canMove = moveDir.x !=0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
 
             if (canMove)
             {
@@ -94,7 +104,7 @@ public class Player : MonoBehaviour , IKitchenObjectParent
             {
                 //Cannot move along X axis . Checking for Z axis.
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized; // Normalised to not change speed.
-                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
+                canMove = moveDir.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
 
                 if (canMove)
                 {
@@ -162,6 +172,7 @@ public class Player : MonoBehaviour , IKitchenObjectParent
     {
         return isWalking;
     }
+
 
     private void SetSelectedCounter(BaseCounter selectedCounter)
     {
