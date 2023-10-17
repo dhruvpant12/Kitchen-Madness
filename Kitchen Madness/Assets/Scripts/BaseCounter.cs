@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BaseCounter : MonoBehaviour , IKitchenObjectParent
 {
-
+    public static event EventHandler OnDropOffSomething;
     [SerializeField] private Transform counterTopPoint;
 
     private KitchenObject kitchenObject; // What KO is on the counter.
@@ -27,6 +28,9 @@ public class BaseCounter : MonoBehaviour , IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+
+        if (kitchenObject != null)
+            OnDropOffSomething?.Invoke(this, EventArgs.Empty);
     }
 
     public KitchenObject GetKitchenObject()

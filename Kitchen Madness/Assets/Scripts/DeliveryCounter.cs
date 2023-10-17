@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class DeliveryCounter : BaseCounter
 {
+    public static DeliveryCounter Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     public override void Interact(Player player)
     {
          if(player.HasKitchenObject())
@@ -15,7 +21,7 @@ public class DeliveryCounter : BaseCounter
                 DeliveryManager.Instance.DeliverRecipe(plateKitchenObject);
                 //check for right recipe
                
-                player.GetKitchenObject().DestroySelf();
+                player.GetKitchenObject().DestroySelf(); 
 
             }
         }
