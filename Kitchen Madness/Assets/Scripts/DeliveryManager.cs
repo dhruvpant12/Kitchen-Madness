@@ -9,6 +9,7 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnRecipeCompleted;
     public event EventHandler OnRecipeSuccess;
     public event EventHandler OnRecipeFailed;
+    public event EventHandler OnCorrectRecipeDeliveryText;
 
 
 
@@ -88,7 +89,9 @@ public class DeliveryManager : MonoBehaviour
                     waitingRecipeSOList.RemoveAt(i);
                     OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                     OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
-                     
+                    OnCorrectRecipeDeliveryText?.Invoke(this, EventArgs.Empty);
+
+
                     return;
                 }
                 else
