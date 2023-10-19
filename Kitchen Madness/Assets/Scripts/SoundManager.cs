@@ -7,9 +7,14 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
     [SerializeField] private AudioClipRefSO audioClipRefSO;
 
+    private const string SOUND_EFFECT_PLAYER_PREFS = "SoundEffectVolume";
+
+    private float volumeModifier;
+
     private void Awake()
     {
         Instance = this;
+        volumeModifier = PlayerPrefs.GetFloat(SOUND_EFFECT_PLAYER_PREFS, 0.7f);
     }
     private void Start()
     {
@@ -66,11 +71,27 @@ public class SoundManager : MonoBehaviour
 
     private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume = 1f)
     {
-        AudioSource.PlayClipAtPoint(audioClipArray[Random.Range(0,audioClipArray.Length)], position, volume);
+        AudioSource.PlayClipAtPoint(audioClipArray[Random.Range(0,audioClipArray.Length)], position, volume*volumeModifier);
     }
 
     public void PlayFootSteps(Vector3 position , float volume)
     {
         PlaySound(audioClipRefSO.footStep, position, volume);
+    }
+
+    public void ChangeVolume()
+    {
+        volumeModifier += 0.1f;
+
+        if (volumeModifier > 1)
+            volumeModifier = 0;
+
+        PlayerPrefs.SetFloat(SOUND_EFFECT_PLAYER_PREFS, volumeModifier);
+        PlayerPrefs.Save();
+    }
+
+    public float GetVolume()
+    {
+        return Mathf.Round(volumeModifier * 10f);
     }
 }

@@ -8,6 +8,7 @@ public class GamePausedUI : MonoBehaviour
 {
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button optionsButton;
 
 
     private bool toggle;
@@ -20,6 +21,8 @@ public class GamePausedUI : MonoBehaviour
         });
 
         mainMenuButton.onClick.AddListener(()=> { Loader.Load(Loader.Scene.MainMenuScene); });
+
+        optionsButton.onClick.AddListener(() => { OptionUI.Instance.TogglePanel(); });
     }
     private void Start()
     {

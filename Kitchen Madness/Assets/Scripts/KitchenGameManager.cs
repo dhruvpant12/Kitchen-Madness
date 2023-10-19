@@ -113,4 +113,9 @@ public class KitchenGameManager : MonoBehaviour
     {
         return 1 - (gamePlayingToStartTimer / gamePlayingToStartTimerMax);
     }
+
+    public bool IsGamePaused()
+    {
+        return isGamePaused;
+    }
 }
