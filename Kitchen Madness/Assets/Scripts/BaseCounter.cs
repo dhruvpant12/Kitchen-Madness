@@ -6,10 +6,15 @@ using System;
 public class BaseCounter : MonoBehaviour , IKitchenObjectParent
 {
     public static event EventHandler OnDropOffSomething;
+
     [SerializeField] private Transform counterTopPoint;
 
     private KitchenObject kitchenObject; // What KO is on the counter.
 
+    public static void ResetStaticData()
+    {
+        OnDropOffSomething = null;
+    }
     public virtual void Interact(Player player)
     {
 

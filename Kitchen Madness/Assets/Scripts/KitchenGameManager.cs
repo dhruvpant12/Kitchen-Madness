@@ -24,8 +24,26 @@ public class KitchenGameManager : MonoBehaviour
     private float countdownToStartTimer = 3f;
     private float gamePlayingToStartTimer ;
     private float gamePlayingToStartTimerMax = 10f;
-     
+    private bool isGamePaused;
 
+
+    private void Start()
+    {
+        GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+        isGamePaused = false;
+    }
+
+    private void GameInput_OnPauseAction(object sender, EventArgs e)
+    {
+        TogglePauseGame();
+    }
+
+    public void TogglePauseGame()
+    {
+        Time.timeScale = isGamePaused ? 1 : 0;
+        isGamePaused = !isGamePaused;
+
+    }
     private void Awake()
     {
         Instance = this;

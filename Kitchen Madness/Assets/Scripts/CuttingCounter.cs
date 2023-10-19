@@ -8,9 +8,16 @@ public class CuttingCounter : BaseCounter , IHasProgress
     public static event EventHandler OnAnyCut; // Event belong to the class. This will play the audio for cutting ingredients
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     public event EventHandler OnCut;
+
+
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
 
     private int cuttingProgress;
+
+    new public static void ResetStaticData()
+    {
+        OnAnyCut = null;
+    }
     public override void Interact(Player player)
     {
         //if no kitchen object is on the counter . 
