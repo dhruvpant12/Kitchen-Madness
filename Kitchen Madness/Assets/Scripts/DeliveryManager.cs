@@ -36,7 +36,7 @@ public class DeliveryManager : MonoBehaviour
             //create new recipe request when timer runs out. Waitinglist can hold only a limited amount of recipes.
             spawnRecipeTimer = spawnRecipeTimerMax;
 
-            if (waitingRecipeSOList.Count < waitingRecipeMax)
+            if (KitchenGameManager.Instance.IsGamePlaying() && waitingRecipeSOList.Count < waitingRecipeMax)
             {
                 RecipeSO recipeSO = recipeListSO.recipeSOList[UnityEngine.Random.Range(0, recipeListSO.recipeSOList.Count)]; // get random recipe for the recipeListSO list.
                  waitingRecipeSOList.Add(recipeSO); // add to waitingRecipeList.

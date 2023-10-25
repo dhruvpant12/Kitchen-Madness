@@ -20,6 +20,7 @@ public class StoveCounterSound : MonoBehaviour
     private void Start()
     {
         stoveCounter.OnstoveCounterParticles += StoveCounter_OnstoveCounterParticles;
+        
         isSoundPlaying = false;
     }
 
@@ -42,8 +43,9 @@ public class StoveCounterSound : MonoBehaviour
             audioSource.Pause();
             isSoundPlaying = false;
         }
-            
 
-           
+         
+
+
     }
 }
